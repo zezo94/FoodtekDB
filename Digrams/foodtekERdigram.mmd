@@ -1,0 +1,295 @@
+---
+config:
+  theme: neutral
+---
+erDiagram
+    USERS {
+        bigint id PK
+        varchar name
+        varchar email
+        date birthday
+        int phone_number
+        tinyint gender
+        varchar password
+        bigint role_id FK
+        timestamp email_verified_at
+        varchar provider
+        varchar provider_id
+        varchar facebook_id
+        varchar remember_token
+        timestamp created_at
+        timestamp updated_at
+    }
+    ROLES {
+        bigint id PK
+        varchar name
+        text description
+        timestamp created_at
+        timestamp updated_at
+    }
+    PERMISSIONS {
+        bigint id PK
+        varchar name
+        varchar description
+        timestamp created_at
+        timestamp updated_at
+    }
+    ROLE_PERMISSIONS {
+        bigint id PK
+        bigint role_id FK
+        bigint permission_id FK
+        timestamp created_at
+        timestamp updated_at
+    }
+    ROLE_USERS {
+        bigint id PK
+        bigint role_id FK
+        bigint user_id FK
+        timestamp created_at
+        timestamp updated_at
+    }
+    ADDRESSES {
+        bigint id PK
+        varchar street
+        varchar city
+        varchar state
+        varchar postal_code
+        varchar country
+        bigint user_id FK
+        timestamp created_at
+        timestamp updated_at
+    }
+    COMMUNICATIONS {
+        bigint id PK
+        bigint user_id FK
+        varchar type
+        timestamp start_time
+        timestamp end_time
+        varchar status
+        text message
+        timestamp created_at
+        timestamp updated_at
+    }
+    CATEGORIES {
+        bigint id PK
+        varchar name
+        text description
+        timestamp created_at
+        timestamp updated_at
+    }
+    ITEMS {
+        bigint id PK
+        varchar name
+        bigint category_id FK
+        decimal price
+        text description
+        timestamp created_at
+        timestamp updated_at
+    }
+    FAVOURITES {
+        bigint id PK
+        bigint user_id FK
+        bigint item_id FK
+        timestamp created_at
+        timestamp updated_at
+    }
+    REVIEWS {
+        bigint id PK
+        bigint user_id FK
+        bigint item_id FK
+        int rating
+        text review
+        timestamp created_at
+        timestamp updated_at
+    }
+    ISSUES {
+        bigint id PK
+        bigint user_id FK
+        varchar issue_description
+        enum status
+        timestamp created_at
+        timestamp updated_at
+    }
+    ORDERS {
+        bigint id PK
+        bigint user_id FK
+        decimal total_amount
+        enum status
+        enum payment_status
+        timestamp created_at
+        timestamp updated_at
+    }
+    ORDER_ITEMS {
+        bigint id PK
+        bigint order_id FK
+        bigint item_id FK
+        int quantity
+        decimal price
+        timestamp created_at
+        timestamp updated_at
+    }
+    DELIVERIES {
+        bigint id PK
+        bigint order_id FK
+        timestamp delivery_time
+        varchar status
+        timestamp created_at
+        timestamp updated_at
+    }
+    PAYMENTS {
+        bigint id PK
+        bigint order_id FK
+        decimal amount
+        enum payment_method
+        enum status
+        timestamp paid_at
+        bigint delivery_id FK
+        timestamp created_at
+        timestamp updated_at
+    }
+    PAYMENTS1 {
+        bigint id PK
+        bigint order_id FK
+        decimal amount
+        enum payment_method
+        enum status
+        timestamp paid_at
+        bigint delivery_id FK
+        timestamp created_at
+        timestamp updated_at
+    }
+    OFFERS {
+        bigint id PK
+        varchar name
+        text description
+        decimal discount_percentage
+        date start_date
+        date end_date
+        timestamp created_at
+        timestamp updated_at
+    }
+    NOTIFICATIONS {
+        bigint id PK
+        bigint user_id FK
+        varchar title
+        text message
+        tinyint is_read
+        timestamp created_at
+        timestamp updated_at
+    }
+    STAFF {
+        bigint id PK
+        varchar name
+        varchar email
+        varchar role
+        bigint user_id FK
+        varchar position
+        decimal salary
+        timestamp created_at
+        timestamp updated_at
+    }
+    STAFFS {
+        bigint id PK
+        varchar name
+        varchar email
+        varchar role
+        bigint user_id FK
+        varchar position
+        decimal salary
+        timestamp created_at
+        timestamp updated_at
+    }
+    PERSONAL_ACCESS_TOKENS {
+        bigint id PK
+        varchar tokenable_type
+        bigint tokenable_id
+        varchar name
+        varchar token
+        text abilities
+        timestamp last_used_at
+        timestamp expires_at
+        timestamp created_at
+        timestamp updated_at
+    }
+    CACHE {
+        varchar key PK
+        mediumtext value
+        int expiration
+    }
+    CACHE_LOCKS {
+        varchar key PK
+        varchar owner
+        int expiration
+    }
+    FAILED_JOBS {
+        bigint id PK
+        varchar uuid
+        text connection
+        text queue
+        longtext payload
+        longtext exception
+        timestamp failed_at
+    }
+    JOBS {
+        bigint id PK
+        varchar queue
+        longtext payload
+        tinyint attempts
+        int reserved_at
+        int available_at
+        int created_at
+    }
+    JOB_BATCHES {
+        varchar id PK
+        varchar name
+        int total_jobs
+        int pending_jobs
+        int failed_jobs
+        longtext failed_job_ids
+        mediumtext options
+        int cancelled_at
+        int created_at
+        int finished_at
+    }
+    MIGRATIONS {
+        int id PK
+        varchar migration
+        int batch
+    }
+    PASSWORD_RESET_TOKENS {
+        varchar email
+        varchar token
+        timestamp created_at
+    }
+    SESSIONS {
+        varchar id PK
+        bigint user_id
+        varchar ip_address
+        text user_agent
+        longtext payload
+        int last_activity
+    }
+    USERS ||--|| ROLES : "role_id FK -> id"
+    ROLES ||--|| ROLE_PERMISSIONS : "id -> role_id"
+    PERMISSIONS ||--|| ROLE_PERMISSIONS : "id -> permission_id"
+    ROLES ||--|| ROLE_USERS : "id -> role_id"
+    USERS ||--|| ROLE_USERS : "id -> user_id"
+    USERS ||--|{ ADDRESSES : "id -> user_id"
+    USERS ||--|{ COMMUNICATIONS : "id -> user_id"
+    CATEGORIES ||--|{ ITEMS : "id -> category_id"
+    USERS ||--|{ FAVOURITES : "id -> user_id"
+    ITEMS ||--|{ FAVOURITES : "id -> item_id"
+    USERS ||--|{ REVIEWS : "id -> user_id"
+    ITEMS ||--|{ REVIEWS : "id -> item_id"
+    USERS ||--|{ ISSUES : "id -> user_id"
+    USERS ||--|{ ORDERS : "id -> user_id"
+    ORDERS ||--|{ ORDER_ITEMS : "id -> order_id"
+    ITEMS ||--|{ ORDER_ITEMS : "id -> item_id"
+    ORDERS ||--|{ DELIVERIES : "id -> order_id"
+    ORDERS ||--|{ PAYMENTS : "id -> order_id"
+    DELIVERIES ||--|{ PAYMENTS : "id -> delivery_id"
+    ORDERS ||--|{ PAYMENTS1 : "id -> order_id"
+    DELIVERIES ||--|{ PAYMENTS1 : "id -> delivery_id"
+    USERS ||--|{ NOTIFICATIONS : "id -> user_id"
+    USERS ||--|{ STAFF : "id -> user_id"
+    USERS ||--|{ STAFFS : "id -> user_id"

@@ -1,0 +1,31 @@
+Php artisan make:migration addresses
+Php artisan make:migration cache
+Php artisan make:migration cache_locks
+Php artisan make:migration categories
+Php artisan make:migration communications
+Php artisan make:migration deliveries
+Php artisan make:migration failed_jobs
+Php artisan make:migration favourites
+Php artisan make:migration issues
+Php artisan make:migration items
+Php artisan make:migration jobs
+Php artisan make:migration job_batches
+Php artisan make:migration migrations 
+Php artisan make:migration notifications
+Php artisan make:migration offers
+Php artisan make:migration orders
+Php artisan make:migration order_items
+Php artisan make:migration password_reset_tokens
+Php artisan make:migration payments
+Php artisan make:migration permissions
+Php artisan make:migration personal_access_tokens
+Php artisan make:migration reviews 
+Php artisan make:migration roles
+Php artisan make:migration role_permissions
+Php artisan make:migration role_users
+Php artisan make:migration sessions
+Php artisan make:migration staffs 
+Php artisan make:migration users
+
+
+Php artisan migrate
