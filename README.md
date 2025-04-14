@@ -1,5 +1,5 @@
 # FoodtekDB
-database build using PHP my admin 
+ 
 
 
 
